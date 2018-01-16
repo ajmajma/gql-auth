@@ -13,6 +13,12 @@ class Signup extends Component {
     };
   }
 
+  componentWillUpdate(nextProps) {
+    if (!this.props.data.user && nextProps.data.user) {
+      hashHistory.push("/dashboard");
+    }
+  }
+
   onSubmit({ email, password }) {
     this.props.mutate({
       variables: { email, password },
@@ -37,4 +43,6 @@ class Signup extends Component {
   }
 }
 
-export default graphql(mutation)(Signup);
+export default graphql(query)(
+  graphql(mutation)(Signup)
+);
